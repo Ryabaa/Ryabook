@@ -29,7 +29,7 @@ class userController {
     async getAllUsers(req, res) {
         try {
             const result = await service.getAllUsers();
-            res.status(201).json(result);
+            res.status(201).json({ users: result, message: "You are ADMIN" });
         } catch (error) {
             res.status(400).json({ error: "Error" });
         }

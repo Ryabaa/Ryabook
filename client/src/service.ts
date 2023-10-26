@@ -23,7 +23,11 @@ axios.interceptors.request.use((req) => {
 
 export const getAllUsers = async () => {
     const res = await axios.get(reqestUrl.allUsers);
-    return res.data.users.sort((a: any, b: any) => a.username.localeCompare(b.username));
+    console.log(res.data);
+    const sortedUsers = res.data.users
+        ? res.data.users.sort((a: any, b: any) => a.username.localeCompare(b.username))
+        : [];
+    return { message: res.data.message, users: sortedUsers };
 };
 
 export const signUpUser = async (data: IUserAccount) => {
