@@ -9,11 +9,13 @@ import User from "./User";
 
 const Users: FC = () => {
     const navigate = useNavigate();
+    const [resMessage, setResMessage] = useState<any>("");
     const [users, setUsers] = useState<[]>([]);
 
     const loadPage = useCallback(async () => {
-        const res = await getAllUsers();
-        setUsers(res);
+        const { message, users } = await getAllUsers();
+        setResMessage(message);
+        setUsers(users);
     }, [setUsers]);
 
     const handleDeleteUser = async (id: string) => {
@@ -28,6 +30,7 @@ const Users: FC = () => {
     return (
         <StyledUsers>
             <h2>All users list</h2>
+            <h3>{resMessage}</h3>
             {users.map((user, index) => (
                 <User key={index} user={user} deleteUser={handleDeleteUser} />
             ))}
