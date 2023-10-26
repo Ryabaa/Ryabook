@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 export default styled.div`
     height: 100vh;
+    width: 100%;
     display: flex;
     justify-content: center;
-    align-items: start;
+    align-items: center;
     flex-direction: column;
     position: relative;
-    width: 100%;
     background: #040405;
     background-size: cover;
 `;
