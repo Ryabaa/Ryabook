@@ -52,7 +52,7 @@ const login = async (userData) => {
 
 const getAllUsers = async () => {
     const users = await User.find();
-    return { users };
+    return users;
 };
 
 const getUser = async (id) => {
