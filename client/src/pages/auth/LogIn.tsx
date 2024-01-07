@@ -1,11 +1,14 @@
-import { FC, useState } from "react";
+import { FC, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+import { ILogin } from "../../types/auth";
+
+import { RootState } from "../../redux/store/store";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/reduxHooks";
+import { authRequest } from "../../redux/reducers/authSlice";
 
 import Container from "../../styles/container";
 import Auth from "./auth-style";
-
-import { IUserAccount } from "../../types/user";
-import { loginUser } from "../../service";
 
 import Form from "../../components/form/Form";
 
@@ -15,21 +18,24 @@ const fields = [
 ];
 
 const LogIn: FC = () => {
+    const dispatch = useAppDispatch();
+    const { message, success } = useAppSelector((state: RootState) => state.auth);
     const navigate = useNavigate();
-    const [resMessage, setResMessage] = useState<any>(null);
 
-    const handleLoginUser = async (data: IUserAccount) => {
-        const res = await loginUser(data);
-        setResMessage(res.data.message);
-        if (res.status === 201) {
-            setTimeout(() => navigate("/users"), 2000);
-        }
+    const handleLoginUser = async (data: ILogin) => {
+        dispatch(authRequest({ ...data, type: "login" }));
     };
+
+    useEffect(() => {
+        if (success) {
+            navigate("/profile", { replace: true });
+        }
+    }, [success, navigate]);
 
     return (
         <Auth>
             <h2>Log in</h2>
-            <p>{resMessage ? resMessage : ""}</p>
+            <p>{message}</p>
             <Form formSubmit={handleLoginUser} fields={fields} submitName="Log in"></Form>
             <Container column="20px" aself="center">
                 <Link to="/signup">Sign Up</Link>

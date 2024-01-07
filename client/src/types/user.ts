@@ -1,6 +1,5 @@
-export interface IUserAccount {
+export interface IUser {
     username: string;
-    password: string;
-    passwordConfirm: string;
+    avatar: string;
     email: string;
 }
