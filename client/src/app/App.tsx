@@ -2,14 +2,15 @@ import { FC } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
-import store from "../redux";
+import { store } from "../redux/store/store";
 
 import GlobalStyles from "../styles/global-style";
 import AppStyle from "./app-style";
 
 import SignUp from "../pages/auth/SignUp";
 import LogIn from "../pages/auth/LogIn";
-import Users from "../pages/allUsers/AllUsers";
+import UserList from "../pages/userList/UserList";
+import Profile from "../pages/Profile";
 
 const App: FC = () => {
     return (
@@ -18,10 +19,11 @@ const App: FC = () => {
             <AppStyle>
                 <BrowserRouter>
                     <Routes>
-                        <Route path="*" element={<Navigate to="/signup" replace />} />
+                        <Route path="*" element={<Navigate to="/profile" replace />} />
                         <Route path="/signup" element={<SignUp />} />
                         <Route path="/login" element={<LogIn />} />
-                        <Route path="/users" element={<Users />} />
+                        <Route path="/users" element={<UserList />} />
+                        <Route path="/profile" element={<Profile />} />
                     </Routes>
                 </BrowserRouter>
             </AppStyle>

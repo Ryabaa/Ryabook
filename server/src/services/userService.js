@@ -21,33 +21,37 @@ const signup = async (userData) => {
     const hashPassword = bcrypt.hashSync(password, 7);
     const userRole = await Role.findOne({ value: "USER" });
     const user = new User({
-        avatar: avatar,
         username: username,
         password: hashPassword,
+        avatar: avatar,
         email: email,
         roles: [userRole.value],
     });
     await user.save();
 
-    return { message: `Registration completed successfully` };
+    const { id, roles } = user;
+    const token = generateAccessToken(id, roles);
+    console.log(token);
+
+    return { success: true, id: id, token: token, message: `Registration completed successfully` };
 };
 
 const login = async (userData) => {
     const { username, password } = userData;
     const user = await User.findOne({ username });
     if (!user) {
-        return { status: 203, message: `User ${username} not found` };
+        return { status: 203, success: false, message: `User ${username} not found` };
     }
 
     const validPassword = bcrypt.compareSync(password, user.password);
     if (!validPassword) {
-        return { status: 203, message: `Invalid password` };
+        return { status: 203, success: false, message: `Invalid password` };
     }
 
     const { id, roles } = user;
     const token = generateAccessToken(id, roles);
 
-    return { token: token, id: id, message: "Login completed successful" };
+    return { success: true, id: id, token: token, message: "Login completed successful" };
 };
 
 const getAllUsers = async () => {

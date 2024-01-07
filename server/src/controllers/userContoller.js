@@ -8,8 +8,8 @@ class userController {
             if (!errors.isEmpty()) {
                 return res.status(203).json({ message: errors.errors[0].msg });
             }
-            const result = await service.signup(req.body);
-            res.status(result.status || 201).json({ message: result.message });
+            const result = await service.signup(req.body, res);
+            res.status(result.status || 201).json({ ...result, message: result.message });
         } catch (error) {
             res.status(400).json({ error: "Sign up error" });
         }
@@ -18,7 +18,7 @@ class userController {
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-                return res.status(203).json({ message: errors.errors[0].msg });
+                return res.status(203).json({ success: false, message: errors.errors[0].msg });
             }
             const result = await service.login(req.body, res);
             res.status(result.status || 201).json({ ...result, message: result.message });
