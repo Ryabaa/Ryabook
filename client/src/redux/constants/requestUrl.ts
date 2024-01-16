@@ -1,9 +1,13 @@
-const serverUrl = "http://localhost:4000";
+const userRoute = "http://localhost:4000/user/";
 
 export const reqestUrl = {
-    allUsers: serverUrl + "/user/list/",
-    signUp: serverUrl + "/user/signup/",
-    login: serverUrl + "/user/login/",
-    delete: serverUrl + "/user/",
-    user: serverUrl + "/user/",
+    userList: userRoute + "list/",
+    signUp: userRoute + "signup/",
+    login: userRoute + "login/",
+    followers: userRoute + "followers/",
+    following: userRoute + "following/",
+    followUser: userRoute + "follow/",
+    unfollowUser: userRoute + "unfollow/",
+    delete: userRoute,
+    user: userRoute,
 };

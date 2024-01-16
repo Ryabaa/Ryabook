@@ -24,6 +24,8 @@ const userSchema = new mongoose.Schema({
         required: false,
         default: "http://localhost:4000/public/defaultAvatar.jpg",
     },
+    following: [{ type: ObjectId, ref: "User" }],
+    followers: [{ type: ObjectId, ref: "User" }],
     roles: [{ type: String, ref: "Role" }],
 });
 

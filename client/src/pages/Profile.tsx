@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 
 import StyledProfile, { Content, Head, PostsTitle, Posts, Info } from "./profile-style";
 
@@ -9,14 +9,17 @@ import Nav from "../components/nav/Nav";
 
 import { useAppDispatch, useAppSelector } from "../redux/hooks/reduxHooks";
 import { getUserData } from "../redux/reducers/userListSlice";
-import { RootState } from "../redux/store/store";
+import { getFollowersData, getFollowingData } from "../redux/reducers/followersSlice";
 
 const Profile: FC = () => {
     const dispatch = useAppDispatch();
-    const user: any = useAppSelector((state: RootState) => state.users.currentUser);
+    const user: any = useAppSelector((state) => state.users.currentUser);
+    const { followers, following } = useAppSelector((state) => state.followers);
 
     useEffect(() => {
         dispatch(getUserData());
+        dispatch(getFollowersData());
+        dispatch(getFollowingData());
     }, []);
 
     return (
@@ -30,24 +33,25 @@ const Profile: FC = () => {
                             <h2>{user.username}</h2>
                         </div>
                         <div>
-                            <h3>0 posts</h3>
-                            <h3>123 friends</h3>
+                            <h3>4 posts</h3>
+                            <h3>{followers.length} followers</h3>
+                            <h3>{following.length} following</h3>
                         </div>
-                        <p>I am looser</p>
-                        <IoMdSettings size={"33px"} />
+                        <p>Description</p>
+                        <IoMdSettings size={"30px"} />
                     </Info>
                 </Head>
                 <PostsTitle>
                     <div>
-                        <HiRectangleStack size={"22px"} />
+                        <HiRectangleStack size={"17px"} />
                         <h2>Posts</h2>
                     </div>
                 </PostsTitle>
                 <Posts>
-                    <p>1</p>
-                    <p>2</p>
-                    <p>3</p>
-                    <p>4</p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
                 </Posts>
             </Content>
         </StyledProfile>

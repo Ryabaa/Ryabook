@@ -11,12 +11,14 @@ import SignUp from "../pages/auth/SignUp";
 import LogIn from "../pages/auth/LogIn";
 import UserList from "../pages/userList/UserList";
 import Profile from "../pages/Profile";
+import Followers from "../components/followers/Followers";
 
 const App: FC = () => {
     return (
         <Provider store={store}>
             <GlobalStyles />
             <AppStyle>
+                <Followers />
                 <BrowserRouter>
                     <Routes>
                         <Route path="*" element={<Navigate to="/profile" replace />} />
