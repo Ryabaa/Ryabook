@@ -31,7 +31,6 @@ const signup = async (userData) => {
 
     const { id, roles } = user;
     const token = generateAccessToken(id, roles);
-    console.log(token);
 
     return { success: true, id: id, token: token, message: `Registration completed successfully` };
 };
@@ -74,9 +73,58 @@ const deleteUser = async (id) => {
     }
 };
 
-const followUser = async (id) => {
-    const user = await User.findByIdAndUpdate();
-    return { user };
+const followUser = async (req) => {
+    const currentUser = await User.findById(req.body.currentUserId);
+    const userToFollow = await User.findById(req.params.id);
+
+    if (!currentUser || !userToFollow) {
+        return { message: "User not found" };
+    }
+
+    currentUser.following.push(userToFollow._id);
+    userToFollow.followers.push(currentUser._id);
+
+    await currentUser.save();
+    await userToFollow.save();
+
+    return { message: "User follow success" };
 };
 
-module.exports = { signup, login, getAllUsers, getUser, deleteUser, followUser };
+const unfollowUser = async (req) => {
+    const currentUser = await User.findById(req.body.currentUserId);
+    const userToUnfollow = await User.findById(req.params.id);
+
+    if (!currentUser || !userToUnfollow) {
+        return { message: "User not found" };
+    }
+
+    currentUser.following.pull(userToUnfollow._id);
+    userToUnfollow.followers.pull(currentUser._id);
+
+    await currentUser.save();
+    await userToUnfollow.save();
+
+    return { message: "User unfollowed success" };
+};
+
+const getFollowers = async (id) => {
+    const currentUser = await User.findById(id).populate("followers");
+    return { followers: currentUser.followers };
+};
+
+const getFollowing = async (id) => {
+    const currentUser = await User.findById(id).populate("following");
+    return { following: currentUser.following };
+};
+
+module.exports = {
+    signup,
+    login,
+    getAllUsers,
+    getUser,
+    deleteUser,
+    followUser,
+    unfollowUser,
+    getFollowers,
+    getFollowing,
+};

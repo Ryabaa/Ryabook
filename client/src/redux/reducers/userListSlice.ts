@@ -30,7 +30,7 @@ const getUserListSlice = createSlice({
     },
 });
 
-export const getUserList = createAction(reqestUrl.allUsers);
+export const getUserList = createAction(reqestUrl.userList);
 export const getUserData = createAction(reqestUrl.user);
 
 export const { updateUserList, deleteUser, getUser } = getUserListSlice.actions;

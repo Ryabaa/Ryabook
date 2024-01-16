@@ -17,9 +17,10 @@ export default styled.div`
         padding-bottom: 40px;
         font-family: "Indie Flower", cursive;
     }
-    & button {
-        margin-top: auto;
-    }
+`;
+
+const MenuButton = styled.button`
+    margin-top: auto;
 `;
 
 const LinkContainer = styled.div`
@@ -28,19 +29,20 @@ const LinkContainer = styled.div`
     column-gap: 10px;
     width: 200px;
     height: 50px;
-    border-radius: 15px;
+    border-radius: 25px;
     transition: all 0.1s ease;
     color: #fff;
+    padding-left: 15px;
     & svg {
-        width: 40px;
+        width: 32px;
     }
     & p {
-        font-size: 16px;
+        font-size: 14px;
         padding-top: 3px;
     }
     &:hover {
-        background: #67676d;
+        background: #5c5c5c;
     }
 `;
 
-export { LinkContainer };
+export { LinkContainer, MenuButton };

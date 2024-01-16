@@ -39,10 +39,14 @@ const Info = styled.div`
     & div {
         display: flex;
         align-items: center;
-        column-gap: 50px;
+        column-gap: 40px;
     }
     & h2 {
-        font-size: 20px;
+        font-size: 18px;
+    }
+    & h3,
+    p {
+        font-size: 12px;
     }
     & svg {
         position: absolute;
@@ -55,7 +59,7 @@ const PostsTitle = styled.div`
     display: flex;
     justify-content: center;
     border-top: solid 1px #545455;
-    height: 55px;
+    margin-top: 60px;
     & div {
         border-top: solid 1px #fff;
         height: 100%;
@@ -64,8 +68,11 @@ const PostsTitle = styled.div`
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        row-gap: 5px;
-        padding-bottom: 5px;
+        row-gap: 7px;
+        padding: 12px 0;
+        & h2 {
+            font-size: 13px;
+        }
     }
 `;
 

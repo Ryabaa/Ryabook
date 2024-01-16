@@ -52,7 +52,31 @@ class userController {
     }
     async followUser(req, res) {
         try {
-            const result = await service.followUser(req.params.id);
+            const result = await service.followUser(req);
+            res.status(201).json(result);
+        } catch (error) {
+            res.status(400).json({ error: "Error" });
+        }
+    }
+    async unfollowUser(req, res) {
+        try {
+            const result = await service.unfollowUser(req);
+            res.status(201).json(result);
+        } catch (error) {
+            res.status(400).json({ error: "Error" });
+        }
+    }
+    async getFollowers(req, res) {
+        try {
+            const result = await service.getFollowers(req.params.id);
+            res.status(201).json(result);
+        } catch (error) {
+            res.status(400).json({ error: "Error" });
+        }
+    }
+    async getFollowing(req, res) {
+        try {
+            const result = await service.getFollowing(req.params.id);
             res.status(201).json(result);
         } catch (error) {
             res.status(400).json({ error: "Error" });

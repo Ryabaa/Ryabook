@@ -1,7 +1,10 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
 
-import StyledNav, { LinkContainer } from "./nav-style";
+import { useAppDispatch } from "../../redux/hooks/reduxHooks";
+import { openModal } from "../../redux/reducers/modalSlice";
+
+import StyledNav, { LinkContainer, MenuButton } from "./nav-style";
 
 import { CgProfile } from "react-icons/cg";
 import { AiFillHome } from "react-icons/ai";
@@ -11,6 +14,12 @@ import { IoNotifications } from "react-icons/io5";
 import { IoMenu } from "react-icons/io5";
 
 const Nav: FC = () => {
+    const dispatch = useAppDispatch();
+
+    const handleOpenModal = async () => {
+        dispatch(openModal());
+    };
+
     return (
         <StyledNav>
             <h1>Ryabook</h1>
@@ -26,12 +35,12 @@ const Nav: FC = () => {
                     <p>Messages</p>
                 </LinkContainer>
             </Link>
-            <Link to="/friends">
+            <button onClick={handleOpenModal}>
                 <LinkContainer>
                     <FaUserFriends size={"22px"} />
-                    <p>Friends</p>
+                    <p>Followers</p>
                 </LinkContainer>
-            </Link>
+            </button>
             <Link to="/notifications">
                 <LinkContainer>
                     <IoNotifications size={"27px"} />
@@ -44,9 +53,9 @@ const Nav: FC = () => {
                     <p>My profile</p>
                 </LinkContainer>
             </Link>
-            <button>
-                <IoMenu size={"40px"} />
-            </button>
+            <MenuButton>
+                <IoMenu size={"35px"} />
+            </MenuButton>
         </StyledNav>
     );
 };

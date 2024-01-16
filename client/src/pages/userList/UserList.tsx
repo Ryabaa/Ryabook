@@ -26,7 +26,7 @@ const UserList: FC = () => {
 
     return (
         <StyledUserList>
-            <h2>All users list</h2>
+            <h2>User List</h2>
             <h3>{message}</h3>
             {list.map((user, index) => (
                 <User key={index} user={user} deleteUser={handleDeleteUser} />

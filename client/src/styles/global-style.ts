@@ -20,7 +20,7 @@ export default createGlobalStyle`
 ::-webkit-scrollbar {
     width: 10px;
     height: 8px;
-    background: #040405;
+    background: unset;
 
 }
 
