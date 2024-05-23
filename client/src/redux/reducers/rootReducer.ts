@@ -1,17 +1,17 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
-import getUsersSlice from "./userListSlice";
+import userSlice from "./userSlice";
 import authSlice from "./authSlice";
 import modalSlice from "./modalSlice";
 import followersSlice from "./followersSlice";
-import loaderSlice from "./loaderSlice";
+import notificationsSlice from "./notificationsSlice";
 
 const rootReducer = combineReducers({
-    users: getUsersSlice,
+    user: userSlice,
     auth: authSlice,
     modal: modalSlice,
     followers: followersSlice,
-    loader: loaderSlice,
+    notifications: notificationsSlice,
 });
 
 export default rootReducer;

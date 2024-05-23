@@ -27,6 +27,6 @@ function* authSaga(action: PayloadAction<any>) {
     }
 }
 
-export function* onAuthStart() {
+export function* watchAuth() {
     yield takeLatest(authRequest.type, authSaga);
 }

@@ -26,6 +26,13 @@ class userController {
             res.status(400).json({ error: "Login error" });
         }
     }
+    async checkAuth(req, res) {
+        try {
+            res.status(201).json({ message: "User authorized" });
+        } catch (error) {
+            res.status(400).json({ error: "Error" });
+        }
+    }
     async getAllUsers(req, res) {
         try {
             const result = await service.getAllUsers();
@@ -61,6 +68,14 @@ class userController {
     async unfollowUser(req, res) {
         try {
             const result = await service.unfollowUser(req);
+            res.status(201).json(result);
+        } catch (error) {
+            res.status(400).json({ error: "Error" });
+        }
+    }
+    async deleteFollower(req, res) {
+        try {
+            const result = await service.deleteFollower(req);
             res.status(201).json(result);
         } catch (error) {
             res.status(400).json({ error: "Error" });

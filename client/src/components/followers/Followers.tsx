@@ -2,14 +2,12 @@ import { FC, useEffect, useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/reduxHooks";
 import {
-    getFollowersData,
-    getFollowingData,
-    unfollowUser,
-    followUser,
+    unfollowUserRequest,
+    followUserRequest,
+    deleteFollowerRequest,
 } from "../../redux/reducers/followersSlice";
-import { getUserData } from "../../redux/reducers/userListSlice";
-import { closeModal } from "../../redux/reducers/modalSlice";
-import { setLoading } from "../../redux/reducers/loaderSlice";
+
+import { closeFollowersModal } from "../../redux/reducers/modalSlice";
 
 import {
     Modal,
@@ -23,30 +21,28 @@ import {
     Block,
 } from "./followers-style";
 
-import LoaderBox from "../loader/LoaderBox";
-
 import { IoClose } from "react-icons/io5";
 
 const Followers: FC = () => {
     const dispatch = useAppDispatch();
-    const currentUser: any = useAppSelector((state) => state.users.currentUser);
-    const modalIsOpen = useAppSelector((state) => state.modal.modalIsOpen);
+    const modalIsOpen = useAppSelector((state) => state.modal.followersModalIsOpen);
     const { followers, following } = useAppSelector((state) => state.followers);
     const [switcher, setSwitcher] = useState(true);
-    const [updateStatus, setUpdateStatus] = useState(false);
 
     const handleCloseModal = async () => {
-        dispatch(closeModal());
+        dispatch(closeFollowersModal());
     };
 
     const handleFollow = async (id: string) => {
-        await dispatch(followUser({ id: id }));
-        setUpdateStatus((prev) => !prev);
+        dispatch(followUserRequest({ id: id }));
     };
 
     const handleUnfollow = async (id: string) => {
-        await dispatch(unfollowUser({ id: id }));
-        setUpdateStatus((prev) => !prev);
+        dispatch(unfollowUserRequest({ id: id }));
+    };
+
+    const handleDeleteFollower = async (id: string) => {
+        dispatch(deleteFollowerRequest({ id: id }));
     };
 
     const handleSwitch = async (state: boolean) => {
@@ -55,16 +51,9 @@ const Followers: FC = () => {
 
     useEffect(() => {
         if (modalIsOpen) {
-            dispatch(setLoading(true));
-            dispatch(getFollowersData());
-            dispatch(getFollowingData());
-            dispatch(getUserData());
-            dispatch(setLoading(false));
+            dispatch({ type: "GET_FOLLOWERS_AND_FOLLOWING_DATA" });
         }
-        return () => {
-            dispatch(setLoading(false));
-        };
-    }, [dispatch, switcher, modalIsOpen, updateStatus]);
+    }, [modalIsOpen]);
 
     return (
         <div>
@@ -81,44 +70,44 @@ const Followers: FC = () => {
                                     Following
                                 </SwitcherButton>
                             </Switcher>
-                            <LoaderBox>
-                                <Content>
-                                    {switcher &&
-                                        followers.map((user) => (
-                                            <Block>
-                                                <div>
-                                                    <img src={user.avatar} alt="" />
-                                                    <h2>{user.username}</h2>
-                                                    {!currentUser.following.find(
-                                                        (follower: string) => follower === user._id
-                                                    ) && (
-                                                        <div>
-                                                            <p>॰</p>
-                                                            <button onClick={() => handleFollow(user._id)}>
-                                                                follow
-                                                            </button>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                                <button value={"second"}>Remove</button>
-                                            </Block>
-                                        ))}
-                                    {!switcher &&
-                                        following.map((user) => (
-                                            <Block>
-                                                <div>
-                                                    <img src={user.avatar} alt="" />
-                                                    <h2>{user.username}</h2>
-                                                </div>
-                                                <button
-                                                    value={"second"}
-                                                    onClick={() => handleUnfollow(user._id)}>
-                                                    Unfollow
-                                                </button>
-                                            </Block>
-                                        ))}
-                                </Content>
-                            </LoaderBox>
+                            <Content>
+                                {switcher &&
+                                    followers.map((user) => (
+                                        <Block>
+                                            <div>
+                                                <img src={user.avatar} alt="" />
+                                                <h2>{user.username}</h2>
+                                                {!following.some(
+                                                    (currentUser) => currentUser._id === user._id
+                                                ) && (
+                                                    <div>
+                                                        <p>॰</p>
+                                                        <button onClick={() => handleFollow(user._id)}>
+                                                            follow
+                                                        </button>
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <button
+                                                value={"second"}
+                                                onClick={() => handleDeleteFollower(user._id)}>
+                                                Remove
+                                            </button>
+                                        </Block>
+                                    ))}
+                                {!switcher &&
+                                    following.map((user) => (
+                                        <Block>
+                                            <div>
+                                                <img src={user.avatar} alt="" />
+                                                <h2>{user.username}</h2>
+                                            </div>
+                                            <button value={"second"} onClick={() => handleUnfollow(user._id)}>
+                                                Unfollow
+                                            </button>
+                                        </Block>
+                                    ))}
+                            </Content>
                         </Container>
                         <CloseButton onClick={handleCloseModal}>
                             <IoClose fill="#5c5c5c" size={"35px"} />

@@ -9,9 +9,10 @@ import AppStyle from "./app-style";
 
 import SignUp from "../pages/auth/SignUp";
 import LogIn from "../pages/auth/LogIn";
-import UserList from "../pages/userList/UserList";
-import Profile from "../pages/Profile";
+import Profile from "../pages/profile/Profile";
 import Followers from "../components/followers/Followers";
+import Notifications from "../components/notifications/Notifications";
+import PrivateRoute from "./PrivateRoute";
 
 const App: FC = () => {
     return (
@@ -19,13 +20,13 @@ const App: FC = () => {
             <GlobalStyles />
             <AppStyle>
                 <Followers />
+                <Notifications />
                 <BrowserRouter>
                     <Routes>
                         <Route path="*" element={<Navigate to="/profile" replace />} />
                         <Route path="/signup" element={<SignUp />} />
                         <Route path="/login" element={<LogIn />} />
-                        <Route path="/users" element={<UserList />} />
-                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/profile" element={<PrivateRoute component={Profile} />} />
                     </Routes>
                 </BrowserRouter>
             </AppStyle>

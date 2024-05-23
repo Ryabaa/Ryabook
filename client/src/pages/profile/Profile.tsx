@@ -1,26 +1,22 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 
 import StyledProfile, { Content, Head, PostsTitle, Posts, Info } from "./profile-style";
 
 import { HiRectangleStack } from "react-icons/hi2";
 import { IoMdSettings } from "react-icons/io";
 
-import Nav from "../components/nav/Nav";
+import Nav from "../../components/nav/Nav";
 
-import { useAppDispatch, useAppSelector } from "../redux/hooks/reduxHooks";
-import { getUserData } from "../redux/reducers/userListSlice";
-import { getFollowersData, getFollowingData } from "../redux/reducers/followersSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/reduxHooks";
 
 const Profile: FC = () => {
     const dispatch = useAppDispatch();
-    const user: any = useAppSelector((state) => state.users.currentUser);
+    const user = useAppSelector((state) => state.user.currentUser);
     const { followers, following } = useAppSelector((state) => state.followers);
 
     useEffect(() => {
-        dispatch(getUserData());
-        dispatch(getFollowersData());
-        dispatch(getFollowingData());
-    }, []);
+        dispatch({ type: "UPDATE_USER_PROFILE" });
+    }, [dispatch]);
 
     return (
         <StyledProfile>

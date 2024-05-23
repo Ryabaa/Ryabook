@@ -1,21 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    modalIsOpen: false,
+    followersModalIsOpen: false,
+    notificationsModalIsOpen: false,
 };
 
 const modalSlice = createSlice({
     name: "modal",
     initialState: initialState,
     reducers: {
-        openModal: (state) => {
-            state.modalIsOpen = true;
+        openFollowersModal: (state) => {
+            state.followersModalIsOpen = true;
         },
-        closeModal: (state) => {
-            state.modalIsOpen = false;
+        closeFollowersModal: (state) => {
+            state.followersModalIsOpen = false;
+        },
+        openNotificationsModal: (state) => {
+            state.notificationsModalIsOpen = true;
+        },
+        closeNotificationsModal: (state) => {
+            state.notificationsModalIsOpen = false;
         },
     },
 });
 
-export const { openModal, closeModal } = modalSlice.actions;
+export const { openFollowersModal, closeFollowersModal, openNotificationsModal, closeNotificationsModal } =
+    modalSlice.actions;
+
 export default modalSlice.reducer;

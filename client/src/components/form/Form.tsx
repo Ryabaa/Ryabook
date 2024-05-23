@@ -1,11 +1,15 @@
 import { FC, FormEvent, useCallback, useState } from "react";
 
-import { IField } from "../../types/form";
-
 import StyledForm from "./form-style";
 import Container from "../../styles/container";
 
 import Input from "./Input";
+
+export interface IField {
+    key: string;
+    value: string;
+    type: string;
+}
 
 interface IForm {
     formSubmit: (data: any) => void;
@@ -39,7 +43,12 @@ const Form: FC<IForm> = ({ formSubmit, fields, submitName }) => {
                 {fields
                     .filter((field) => field.key !== "avatar")
                     .map((field, index) => (
-                        <Container background="#cfd0d11a" position="relative" align="center" width="300px" key={index}>
+                        <Container
+                            background="#cfd0d11a"
+                            position="relative"
+                            align="center"
+                            width="300px"
+                            key={index}>
                             <label>{field.value} </label>
                             <Input field={field} editData={editData} />
                         </Container>
