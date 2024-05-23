@@ -1,6 +1,10 @@
 import { ChangeEvent, FC, FocusEvent, useState } from "react";
 
-import { IField } from "../../types/form";
+export interface IField {
+    key: string;
+    value: string;
+    type: string;
+}
 
 interface IInput {
     field: IField;

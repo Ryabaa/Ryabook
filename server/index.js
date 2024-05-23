@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const userRouter = require("./src/routers/userRouter");
+const notificationRouter = require("./src/routers/notificationRouter");
 
 const app = express(),
     port = process.env.PORT;
@@ -19,6 +20,7 @@ app.use((req, res, next) => {
 app.use(cors());
 
 app.use("/user", userRouter);
+app.use("/notification", notificationRouter);
 
 app.use(express.static(__dirname));
 

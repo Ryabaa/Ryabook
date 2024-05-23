@@ -1,31 +1,33 @@
-import axios from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+
+import { store } from "./redux/store/store";
+import { setAuthStatus } from "./redux/reducers/authSlice";
+
 import getLocalStorage from "./utils/getLocalStorage";
 
-const instance = axios.create();
+const axiosInstance: AxiosInstance = axios.create();
 
-instance.interceptors.request.use(
-    (config) => {
-        const token = getLocalStorage("token");
-        if (config.headers && token) {
-            config.headers["Authorization"] = `Bearer ${token}`;
+axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
+    const token = getLocalStorage("token");
+    if (token) {
+        if (!config.headers) {
+            config.headers = {};
         }
-        return config;
-    },
-    (error) => {
-        return Promise.reject(error);
+        config.headers["Authorization"] = `Bearer ${token}`;
     }
-);
+    return config;
+});
 
-instance.interceptors.response.use(
-    (response) => {
+axiosInstance.interceptors.response.use(
+    (response: AxiosResponse) => {
         return response;
     },
     (error) => {
-        if (error.response.status === 403) {
-            window.location.href = "/login";
+        if (error.response && error.response.status === 401) {
+            store.dispatch(setAuthStatus(false));
         }
         return Promise.reject(error);
     }
 );
 
-export default instance;
+export default axiosInstance;

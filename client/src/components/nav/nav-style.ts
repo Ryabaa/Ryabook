@@ -45,4 +45,20 @@ const LinkContainer = styled.div`
     }
 `;
 
-export { LinkContainer, MenuButton };
+const NotificationsCounter = styled.div`
+    position: absolute;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: rgb(255, 48, 64);
+    border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 12px 0 0 17px;
+    & span {
+        font-size: 11px;
+    }
+`;
+
+export { LinkContainer, MenuButton, NotificationsCounter };

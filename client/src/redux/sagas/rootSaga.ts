@@ -5,23 +5,37 @@ import { reqestUrl } from "../constants/requestUrl";
 import {
     getFollowersSaga,
     getFollowingSaga,
-    getUserListSaga,
     getUserSaga,
-    onDeleteUserStart,
-    onFollowUserStart,
-    onUnfollowUserStart,
+    watchUpdateUserProfile,
+    watchFollowUser,
+    watchUnfollowUser,
+    watchGetFollowersAndFollowing,
+    watchDeleteFollower,
 } from "./userSaga";
-import { onAuthStart } from "./authSaga";
+
+import { watchAuth } from "./authSaga";
+
+import {
+    getNotificationsSaga,
+    getUnreadNotificationsCountSaga,
+    markAllNotificationsAsReadSaga,
+    watchUpdateNotificationsData,
+} from "./notificationsSaga";
 
 export default function* sagas() {
-    yield takeEvery(reqestUrl.userList, getUserListSaga);
     yield takeEvery(reqestUrl.user, getUserSaga);
     yield takeEvery(reqestUrl.followers, getFollowersSaga);
     yield takeEvery(reqestUrl.following, getFollowingSaga);
+    yield takeEvery(reqestUrl.getNotifications, getNotificationsSaga);
+    yield takeEvery(reqestUrl.markAllNotificationsAsRead, markAllNotificationsAsReadSaga);
+    yield takeEvery(reqestUrl.getUnreadNotificationsCount, getUnreadNotificationsCountSaga);
     yield all([
-        call(onAuthStart),
-        call(onDeleteUserStart),
-        call(onUnfollowUserStart),
-        call(onFollowUserStart),
+        call(watchAuth),
+        call(watchGetFollowersAndFollowing),
+        call(watchUpdateUserProfile),
+        call(watchFollowUser),
+        call(watchUnfollowUser),
+        call(watchDeleteFollower),
+        call(watchUpdateNotificationsData),
     ]);
 }
