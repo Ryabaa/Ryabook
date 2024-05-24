@@ -8,6 +8,8 @@ import { IoMdSettings } from "react-icons/io";
 import Nav from "../../components/nav/Nav";
 
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/reduxHooks";
+import { setNotification } from "../../redux/reducers/notificationsSlice";
+import { socket } from "../../sockets";
 
 const Profile: FC = () => {
     const dispatch = useAppDispatch();

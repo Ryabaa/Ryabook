@@ -1,5 +1,7 @@
 import { FC, useEffect, useState } from "react";
 
+import { followUserSocket, socket } from "../../sockets";
+
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/reduxHooks";
 import {
     unfollowUserRequest,
@@ -25,6 +27,7 @@ import { IoClose } from "react-icons/io5";
 
 const Followers: FC = () => {
     const dispatch = useAppDispatch();
+    const user = useAppSelector((state) => state.user.currentUser);
     const modalIsOpen = useAppSelector((state) => state.modal.followersModalIsOpen);
     const { followers, following } = useAppSelector((state) => state.followers);
     const [switcher, setSwitcher] = useState(true);
@@ -34,6 +37,7 @@ const Followers: FC = () => {
     };
 
     const handleFollow = async (id: string) => {
+        followUserSocket(user.id, id);
         dispatch(followUserRequest({ id: id }));
     };
 
@@ -72,8 +76,8 @@ const Followers: FC = () => {
                             </Switcher>
                             <Content>
                                 {switcher &&
-                                    followers.map((user) => (
-                                        <Block>
+                                    followers.map((user, index) => (
+                                        <Block key={index}>
                                             <div>
                                                 <img src={user.avatar} alt="" />
                                                 <h2>{user.username}</h2>
@@ -96,8 +100,8 @@ const Followers: FC = () => {
                                         </Block>
                                     ))}
                                 {!switcher &&
-                                    following.map((user) => (
-                                        <Block>
+                                    following.map((user, index) => (
+                                        <Block key={index}>
                                             <div>
                                                 <img src={user.avatar} alt="" />
                                                 <h2>{user.username}</h2>
