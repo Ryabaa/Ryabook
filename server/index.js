@@ -2,12 +2,15 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const http = require("http");
+const socketIo = require("socket.io");
 
 const userRouter = require("./src/routers/userRouter");
 const notificationRouter = require("./src/routers/notificationRouter");
+const { handleFollowUser } = require("./src/handlers/notrificationHandler");
 
-const app = express(),
-    port = process.env.PORT;
+const app = express();
+const port = process.env.PORT;
 
 app.use(express.json());
 app.use((req, res, next) => {
@@ -30,8 +33,39 @@ const start = async () => {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
-        app.listen(port, () => {
+
+        const server = await app.listen(port, () => {
             console.log(`Server started on http://${process.env.DOMAIN}:${port}`);
+        });
+
+        const io = socketIo(server, {
+            cors: {
+                origin: "*",
+                methods: ["GET", "POST"],
+            },
+        });
+
+        const userSocketMap = {};
+
+        io.on("connection", (socket) => {
+            console.log("New client connected");
+
+            socket.on("registerUser", (userId) => {
+                userSocketMap[userId] = socket.id;
+            });
+
+            socket.on("followUser", ({ userId, followerId }) => {
+                handleFollowUser(io, userSocketMap, userId, followerId);
+            });
+
+            socket.on("disconnect", () => {
+                for (let userId in userSocketMap) {
+                    if (userSocketMap[userId] === socket.id) {
+                        delete userSocketMap[userId];
+                        break;
+                    }
+                }
+            });
         });
     } catch (error) {
         console.log(error);

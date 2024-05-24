@@ -13,6 +13,7 @@ import Profile from "../pages/profile/Profile";
 import Followers from "../components/followers/Followers";
 import Notifications from "../components/notifications/Notifications";
 import PrivateRoute from "./PrivateRoute";
+import NotificationPopUp from "../components/notifications/NotificationPopUp";
 
 const App: FC = () => {
     return (
@@ -21,6 +22,7 @@ const App: FC = () => {
             <AppStyle>
                 <Followers />
                 <Notifications />
+                <NotificationPopUp />
                 <BrowserRouter>
                     <Routes>
                         <Route path="*" element={<Navigate to="/profile" replace />} />

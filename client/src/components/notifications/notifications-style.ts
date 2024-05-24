@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 export const ModalWrapper = styled.div`
     position: absolute;
@@ -58,16 +58,56 @@ export const Content = styled.div`
     overflow-y: scroll;
 `;
 
-export const NotificationContainer = styled.div`
-    width: 100%;
+interface NotificationContainerProps {
+    popUp?: boolean;
+}
+
+const popUpAnimation = keyframes`
+    0% {
+      bottom: 0;
+      opacity: 0;
+    }
+    7% {
+      bottom: 70px;
+      opacity: 0.5;
+    }
+    10% {
+      bottom: 60px;
+      opacity: 1;
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+`;
+
+export const NotificationContainer = styled.div<NotificationContainerProps>`
     display: flex;
     align-items: center;
     column-gap: 15px;
+    z-index: 5;
+    width: 100%;
+    ${(props) =>
+        props.popUp &&
+        css`
+            width: 300px;
+            max-height: min-content;
+            position: absolute;
+            background-color: #1a1a1a;
+            border-radius: 50px;
+            bottom: 60px;
+            right: 50px;
+            opacity: 0;
+            box-shadow: 0 0 15px #ffffff6e;
+            animation: ${popUpAnimation} 5s cubic-bezier(0.4, 0, 1, 1);
+        `};
 `;
 
 export const Avatar = styled.img`
-    width: 50px;
-    height: 50px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
 `;
 

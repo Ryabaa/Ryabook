@@ -22,6 +22,7 @@ import {
 } from "./notifications-style";
 
 import { IoClose } from "react-icons/io5";
+import Notification from "./Notification";
 
 const Notifications: FC = () => {
     const dispatch = useAppDispatch();
@@ -48,24 +49,7 @@ const Notifications: FC = () => {
                             <h2>Notifications</h2>
                             <Content>
                                 {notifications.map((notification: any, index) => (
-                                    <NotificationContainer key={index}>
-                                        <Avatar src={notification.avatar} alt="Avatar" />
-                                        <NotificationDetails>
-                                            <Username>{`${notification.username} `}</Username>
-                                            <span>{`${notification.action}. `}</span>
-                                            <Time>{moment(notification.date).fromNow()}</Time>
-                                        </NotificationDetails>
-                                        {notification.post && <Post>{/* notification.post */}</Post>}
-                                        {"following" in notification ? (
-                                            notification.following ? (
-                                                <FollowingButton disabled>Following</FollowingButton>
-                                            ) : (
-                                                <FollowingButton>Follow</FollowingButton>
-                                            )
-                                        ) : (
-                                            <></>
-                                        )}
-                                    </NotificationContainer>
+                                    <Notification notification={notification} key={index} />
                                 ))}
                             </Content>
                         </Container>
