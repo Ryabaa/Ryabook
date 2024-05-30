@@ -14,12 +14,14 @@ import Followers from "../components/followers/Followers";
 import Notifications from "../components/notifications/Notifications";
 import PrivateRoute from "./PrivateRoute";
 import NotificationPopUp from "../components/notifications/NotificationPopUp";
+import Avatar from "../components/avatar/Avatar";
 
 const App: FC = () => {
     return (
         <Provider store={store}>
             <GlobalStyles />
             <AppStyle>
+                <Avatar />
                 <Followers />
                 <Notifications />
                 <NotificationPopUp />

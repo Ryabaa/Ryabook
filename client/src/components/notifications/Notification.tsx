@@ -8,8 +8,9 @@ import {
     Post,
     Time,
     NotificationDetails,
-    FollowingButton,
 } from "./notifications-style";
+import { clearNotification, openNotificationsModal } from "../../redux/reducers/notificationsSlice";
+import { useAppDispatch } from "../../redux/hooks/reduxHooks";
 
 interface INotificationProps {
     notification: any;
@@ -17,24 +18,23 @@ interface INotificationProps {
 }
 
 const Notification: FC<INotificationProps> = ({ notification, popUp }) => {
+    const dispatch = useAppDispatch();
+
+    const handleOpenNotificationsModal = async () => {
+        dispatch(openNotificationsModal());
+        dispatch(clearNotification());
+    };
+
     return (
-        <NotificationContainer popUp={popUp}>
+        <NotificationContainer onClick={popUp ? handleOpenNotificationsModal : undefined} popUp={popUp}>
             <Avatar src={notification.avatar} alt="Avatar" />
             <NotificationDetails>
                 <Username>{`${notification.username} `}</Username>
-                <span>{`${notification.action}. `}</span>
-                <Time>{moment(notification.date).fromNow()}</Time>
+                <span>{notification.action}</span>
+                <br />
+                {!popUp ? <Time>{moment(notification.date).fromNow()}</Time> : <></>}
             </NotificationDetails>
             {notification.post && <Post>{/* notification.post */}</Post>}
-            {"following" in notification ? (
-                notification.following ? (
-                    <FollowingButton disabled>Following</FollowingButton>
-                ) : (
-                    <FollowingButton>Follow</FollowingButton>
-                )
-            ) : (
-                <></>
-            )}
         </NotificationContainer>
     );
 };

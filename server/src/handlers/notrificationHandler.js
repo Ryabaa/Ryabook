@@ -27,7 +27,6 @@ const handleFollowUser = async (io, userSocketMap, userId, followerId) => {
 
         if (followerSocketId) {
             io.to(followerSocketId).emit("newNotification", formattedNotification);
-            console.log("Notification has sent:", followerId);
         } else {
             console.log("Socket for user not found:", followerId);
         }

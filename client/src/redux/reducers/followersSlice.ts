@@ -2,11 +2,13 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 import { reqestUrl } from "../constants/requestUrl";
 
 interface IFollowersState {
+    modalIsOpen: boolean;
     followers: Array<any>;
     following: Array<any>;
 }
 
 const initialState: IFollowersState = {
+    modalIsOpen: false,
     followers: [],
     following: [],
 };
@@ -15,6 +17,12 @@ const followersSlice = createSlice({
     name: "followers",
     initialState: initialState,
     reducers: {
+        openFollowersModal: (state) => {
+            state.modalIsOpen = true;
+        },
+        closeFollowersModal: (state) => {
+            state.modalIsOpen = false;
+        },
         getFollowers: (state, action) => {
             state.followers = [...action.payload];
         },
@@ -51,6 +59,8 @@ export const {
     unfollowUserResponse,
     deleteFollowerRequest,
     deleteFollowerResponse,
+    openFollowersModal,
+    closeFollowersModal,
 } = followersSlice.actions;
 
 export default followersSlice.reducer;

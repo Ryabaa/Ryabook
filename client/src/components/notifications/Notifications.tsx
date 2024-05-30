@@ -1,32 +1,18 @@
-import moment from "moment";
 import { FC, useEffect } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/reduxHooks";
 
-import { closeNotificationsModal } from "../../redux/reducers/modalSlice";
+import { closeNotificationsModal } from "../../redux/reducers/notificationsSlice";
 
-import {
-    Modal,
-    Container,
-    CloseButton,
-    ModalSubstrate,
-    ModalWrapper,
-    Content,
-    NotificationContainer,
-    Avatar,
-    Username,
-    Post,
-    Time,
-    NotificationDetails,
-    FollowingButton,
-} from "./notifications-style";
+import { Modal, Container, CloseButton, ModalSubstrate, ModalWrapper, Content } from "./notifications-style";
 
 import { IoClose } from "react-icons/io5";
+
 import Notification from "./Notification";
 
 const Notifications: FC = () => {
     const dispatch = useAppDispatch();
-    const modalIsOpen = useAppSelector((state) => state.modal.notificationsModalIsOpen);
+    const modalIsOpen = useAppSelector((state) => state.notifications.modalIsOpen);
     const { notifications } = useAppSelector((state) => state.notifications);
 
     const handleCloseModal = async () => {

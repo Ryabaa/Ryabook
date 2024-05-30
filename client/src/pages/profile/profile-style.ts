@@ -23,8 +23,14 @@ const Head = styled.div`
     justify-content: center;
     justify-items: center;
     height: 250px;
+`;
+
+const Avatar = styled.button`
+    width: 150px;
+    height: 150px;
     & img {
-        width: 150px;
+        width: 100%;
+        height: 100%;
         border-radius: 50%;
     }
 `;
@@ -89,4 +95,4 @@ const Posts = styled.div`
     }
 `;
 
-export { Content, Head, Info, PostsTitle, Posts };
+export { Content, Head, Avatar, Info, PostsTitle, Posts };

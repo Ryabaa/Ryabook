@@ -16,7 +16,6 @@ const NotificationPopUp = () => {
 
     useEffect(() => {
         socket.on("newNotification", (notification) => {
-            console.log("Received new notification:", notification);
             dispatch(setNotification(notification));
             dispatch(getUnreadNotificationsCountData());
         });
@@ -25,7 +24,6 @@ const NotificationPopUp = () => {
     useEffect(() => {
         if (latestNotification) {
             setTimeout(() => {
-                console.log(1);
                 dispatch(clearNotification());
             }, 5000);
         }

@@ -2,7 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const http = require("http");
 const socketIo = require("socket.io");
 
 const userRouter = require("./src/routers/userRouter");
@@ -18,6 +17,7 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Content-Type", "application/json");
+    res.header("Content-Type", "multipart/form-data");
     next();
 });
 app.use(cors());

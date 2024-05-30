@@ -21,7 +21,6 @@ const getNotificationsForUser = async (req) => {
                 avatar: notification.actionUserId.avatar,
                 date: notification.createdAt,
                 action: "started following you",
-                following: false,
             })),
             likeNotifications.map((notification) => ({
                 id: notification.actionUserId._id,

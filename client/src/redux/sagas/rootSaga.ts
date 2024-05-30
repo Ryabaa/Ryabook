@@ -11,6 +11,8 @@ import {
     watchUnfollowUser,
     watchGetFollowersAndFollowing,
     watchDeleteFollower,
+    watchUploadAvatar,
+    watchRemoveAvatar,
 } from "./userSaga";
 
 import { watchAuth } from "./authSaga";
@@ -37,5 +39,7 @@ export default function* sagas() {
         call(watchUnfollowUser),
         call(watchDeleteFollower),
         call(watchUpdateNotificationsData),
+        call(watchUploadAvatar),
+        call(watchRemoveAvatar),
     ]);
 }

@@ -38,3 +38,16 @@ export const deleteFollowerApi = async (id: string) => {
     const res = await axiosInstance.post(reqestUrl.deleteFollower + id, req);
     return res.data;
 };
+
+export const uploadAvatarApi = async (data: any) => {
+    const id = getLocalStorage("id");
+    const req = data;
+    await axiosInstance.post(reqestUrl.uploadAvatar + id, req);
+    return;
+};
+
+export const removeAvatarApi = async () => {
+    const id = getLocalStorage("id");
+    await axiosInstance.delete(reqestUrl.removeAvatar + id);
+    return;
+};

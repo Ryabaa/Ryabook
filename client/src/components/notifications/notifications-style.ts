@@ -89,10 +89,12 @@ export const NotificationContainer = styled.div<NotificationContainerProps>`
     column-gap: 15px;
     z-index: 5;
     width: 100%;
+    line-height: 20px;
     ${(props) =>
         props.popUp &&
         css`
-            width: 300px;
+            cursor: pointer;
+            width: 295px;
             max-height: min-content;
             position: absolute;
             background-color: #1a1a1a;
@@ -128,8 +130,8 @@ export const Post = styled.div`
     margin: auto;
 `;
 
-export const FollowingButton = styled.button`
-    background-color: ${(props) => (props.disabled ? "#5c5c5c" : "#0095f6")};
+export const FollowingButton = styled.button.attrs((props: { active: boolean }) => props)`
+    background-color: ${(props) => (props.active ? "#0095f6" : "#5c5c5c")};
     border-radius: 10px;
     padding: 11px 20px;
     display: flex;

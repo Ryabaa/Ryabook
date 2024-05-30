@@ -2,7 +2,9 @@ import { FC, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/reduxHooks";
-import { openFollowersModal, openNotificationsModal } from "../../redux/reducers/modalSlice";
+import { getUnreadNotificationsCountData } from "../../redux/reducers/notificationsSlice";
+import { openFollowersModal } from "../../redux/reducers/followersSlice";
+import { openNotificationsModal } from "../../redux/reducers/notificationsSlice";
 
 import StyledNav, { LinkContainer, MenuButton, NotificationsCounter } from "./nav-style";
 
@@ -11,7 +13,6 @@ import { AiFillHome } from "react-icons/ai";
 import { TbMessageCircle2 } from "react-icons/tb";
 import { FaUserFriends } from "react-icons/fa";
 import { IoMenu, IoSearchOutline, IoNotifications } from "react-icons/io5";
-import { getUnreadNotificationsCountData } from "../../redux/reducers/notificationsSlice";
 
 const Nav: FC = () => {
     const dispatch = useAppDispatch();

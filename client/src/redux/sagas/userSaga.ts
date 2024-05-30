@@ -7,7 +7,9 @@ import {
     getFollowersApi,
     getFollowingApi,
     getUserApi,
+    removeAvatarApi,
     unfollowUserApi,
+    uploadAvatarApi,
 } from "./api/userApi";
 import { getUser, getUserData } from "../reducers/userSlice";
 import {
@@ -22,6 +24,12 @@ import {
     deleteFollowerResponse,
     deleteFollowerRequest,
 } from "../reducers/followersSlice";
+import {
+    removeAvatarRequest,
+    removeAvatarSuccess,
+    uploadAvatarRequest,
+    uploadAvatarSuccess,
+} from "../reducers/avatarSlice";
 
 export function* getUserSaga(): any {
     try {
@@ -77,6 +85,24 @@ function* deleteFollowerSaga(action: PayloadAction<any>): any {
     }
 }
 
+export function* uploadAvatarSaga(action: PayloadAction<any>): any {
+    try {
+        yield call(uploadAvatarApi, action.payload);
+        yield put(uploadAvatarSuccess());
+    } catch (error) {
+        yield put({ type: "PRODUCTS_REQUEST_FAILED", error });
+    }
+}
+
+export function* removeAvatarSaga() {
+    try {
+        yield removeAvatarApi();
+        yield put(removeAvatarSuccess());
+    } catch (error) {
+        yield put({ type: "PRODUCTS_REQUEST_FAILED", error });
+    }
+}
+
 export function* updateUserProfileSaga() {
     try {
         yield all([put(getUserData()), put(getFollowersData()), put(getFollowingData())]);
@@ -98,7 +124,10 @@ export function* watchGetFollowersAndFollowing() {
 }
 
 export function* watchUpdateUserProfile() {
-    yield takeLatest("UPDATE_USER_PROFILE", updateUserProfileSaga);
+    yield takeLatest(
+        ["UPDATE_USER_PROFILE", uploadAvatarSuccess.type, removeAvatarSuccess.type],
+        updateUserProfileSaga
+    );
 }
 
 export function* watchFollowUser() {
@@ -111,4 +140,12 @@ export function* watchUnfollowUser() {
 
 export function* watchDeleteFollower() {
     yield takeLatest(deleteFollowerRequest.type, deleteFollowerSaga);
+}
+
+export function* watchUploadAvatar() {
+    yield takeLatest(uploadAvatarRequest.type, uploadAvatarSaga);
+}
+
+export function* watchRemoveAvatar() {
+    yield takeLatest(removeAvatarRequest.type, removeAvatarSaga);
 }

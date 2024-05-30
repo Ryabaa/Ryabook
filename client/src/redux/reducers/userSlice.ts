@@ -1,4 +1,4 @@
-import { createAction, createSlice, current } from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
 
 import { reqestUrl } from "../constants/requestUrl";
 
