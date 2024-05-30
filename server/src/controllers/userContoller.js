@@ -97,6 +97,27 @@ class userController {
             res.status(400).json({ error: "Error" });
         }
     }
+    async uploadAvatar(req, res) {
+        try {
+            const file = req.file;
+            if (!file) {
+                return res.status(400).send("No file uploaded");
+            }
+            const result = await service.uploadAvatar(req.params.id, file);
+            res.status(201).json(result);
+        } catch (error) {
+            res.status(400).json({ error: "Error" });
+        }
+    }
+    async removeAvatar(req, res) {
+        try {
+            console.log(req.params.id);
+            const result = await service.removeAvatar(req.params.id);
+            res.status(201).json(result);
+        } catch (error) {
+            res.status(400).json({ error: "Error" });
+        }
+    }
 }
 
 module.exports = userController;

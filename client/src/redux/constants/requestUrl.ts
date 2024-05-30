@@ -10,6 +10,8 @@ export const reqestUrl = {
     followUser: userRoute + "follow/",
     unfollowUser: userRoute + "unfollow/",
     deleteFollower: userRoute + "delete-follower/",
+    uploadAvatar: userRoute + "upload-avatar/",
+    removeAvatar: userRoute + "remove-avatar/",
     getNotifications: notificationRoute + "list/",
     getUnreadNotificationsCount: notificationRoute + "unread/",
     markAllNotificationsAsRead: notificationRoute + "mark-as-read/",

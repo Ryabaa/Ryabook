@@ -2,7 +2,10 @@ const User = require("../models/User");
 const Role = require("../models/Role");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const fs = require("fs");
+const path = require("path");
 const { secret } = require("../../config");
+const { deleteFileIfExists } = require("../utils/multer");
 
 const generateAccessToken = (id, roles) => {
     const payload = {
@@ -55,6 +58,13 @@ const login = async (userData) => {
 
 const getUser = async (id) => {
     const user = await User.findById(id);
+
+    let avatarFile = null;
+
+    try {
+        avatarFile = fs.readFile(user.avatar);
+    } catch (error) {}
+
     const formattedUser = {
         id: user._id,
         email: user.email,
@@ -163,6 +173,19 @@ const getFollowing = async (id) => {
     return currentUser.following;
 };
 
+const uploadAvatar = async (userId, file) => {
+    const filePath = `http://localhost:4000/upload/${file.filename}`;
+    await User.findByIdAndUpdate(userId, { avatar: filePath }, { new: true });
+    return { message: "Avatar uploaded successfully" };
+};
+
+const removeAvatar = async (userId) => {
+    deleteFileIfExists(userId);
+    const filePath = "http://localhost:4000/public/defaultAvatar.jpg";
+    await User.findByIdAndUpdate(userId, { avatar: filePath }, { new: true });
+    return { message: "Avatar deleted successfully" };
+};
+
 module.exports = {
     signup,
     login,
@@ -173,4 +196,6 @@ module.exports = {
     deleteFollower,
     getFollowers,
     getFollowing,
+    uploadAvatar,
+    removeAvatar,
 };

@@ -2,12 +2,14 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 import { reqestUrl } from "../constants/requestUrl";
 
 interface INotificationsState {
+    modalIsOpen: boolean;
     notifications: Array<any>;
     unreadNotificationsCount: number;
     latestNotification: any;
 }
 
 const initialState: INotificationsState = {
+    modalIsOpen: false,
     notifications: [],
     unreadNotificationsCount: 0,
     latestNotification: null,
@@ -17,6 +19,12 @@ const notificationsSlice = createSlice({
     name: "notifications",
     initialState: initialState,
     reducers: {
+        openNotificationsModal: (state) => {
+            state.modalIsOpen = true;
+        },
+        closeNotificationsModal: (state) => {
+            state.modalIsOpen = false;
+        },
         getNotifications: (state, action) => {
             state.notifications = [...action.payload];
         },
@@ -45,6 +53,8 @@ export const {
     getNotifications,
     getUnreadNotificationsCount,
     markAllNotificationsAsRead,
+    openNotificationsModal,
+    closeNotificationsModal,
 } = notificationsSlice.actions;
 
 export default notificationsSlice.reducer;

@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 
-import StyledProfile, { Content, Head, PostsTitle, Posts, Info } from "./profile-style";
+import StyledProfile, { Content, Head, PostsTitle, Posts, Info, Avatar } from "./profile-style";
 
 import { HiRectangleStack } from "react-icons/hi2";
 import { IoMdSettings } from "react-icons/io";
@@ -8,14 +8,16 @@ import { IoMdSettings } from "react-icons/io";
 import Nav from "../../components/nav/Nav";
 
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/reduxHooks";
-import { setNotification } from "../../redux/reducers/notificationsSlice";
-import { socket } from "../../sockets";
+import { openAvatarModal } from "../../redux/reducers/avatarSlice";
 
 const Profile: FC = () => {
     const dispatch = useAppDispatch();
     const user = useAppSelector((state) => state.user.currentUser);
     const { followers, following } = useAppSelector((state) => state.followers);
 
+    const handleOpenAvatarModal = async () => {
+        dispatch(openAvatarModal());
+    };
     useEffect(() => {
         dispatch({ type: "UPDATE_USER_PROFILE" });
     }, [dispatch]);
@@ -25,7 +27,9 @@ const Profile: FC = () => {
             <Nav />
             <Content>
                 <Head>
-                    <img src={user.avatar} alt="" />
+                    <Avatar onClick={handleOpenAvatarModal}>
+                        <img src={user.avatar} alt="" />
+                    </Avatar>
                     <Info>
                         <div>
                             <h2>{user.username}</h2>

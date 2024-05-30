@@ -9,7 +9,7 @@ import {
     deleteFollowerRequest,
 } from "../../redux/reducers/followersSlice";
 
-import { closeFollowersModal } from "../../redux/reducers/modalSlice";
+import { closeFollowersModal } from "../../redux/reducers/followersSlice";
 
 import {
     Modal,
@@ -28,7 +28,7 @@ import { IoClose } from "react-icons/io5";
 const Followers: FC = () => {
     const dispatch = useAppDispatch();
     const user = useAppSelector((state) => state.user.currentUser);
-    const modalIsOpen = useAppSelector((state) => state.modal.followersModalIsOpen);
+    const modalIsOpen = useAppSelector((state) => state.followers.modalIsOpen);
     const { followers, following } = useAppSelector((state) => state.followers);
     const [switcher, setSwitcher] = useState(true);
 
