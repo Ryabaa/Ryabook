@@ -1,16 +1,11 @@
-const multer = require("multer");
 const fs = require("fs");
+const multer = require("multer");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 
-const uploadPath = path.resolve(__dirname, "..", "..", "upload");
-if (!fs.existsSync(uploadPath)) {
-    fs.mkdirSync(uploadPath, { recursive: true });
-}
-
 const deleteFileIfExists = async (userId) => {
     try {
-        const directoryPath = path.join("upload");
+        const directoryPath = path.join("storage", "avatars");
         const files = await fs.promises.readdir(directoryPath);
         const filesToDelete = files.filter((file) => file.includes(userId));
 
@@ -19,24 +14,27 @@ const deleteFileIfExists = async (userId) => {
             await fs.promises.unlink(filePath);
         }
     } catch (error) {
-        console.error(`Error deleting file`, error);
+        console.error(`Error deleting files in ${directoryPath}:`, error);
     }
 };
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, uploadPath);
-    },
-    filename: (req, file, cb) => {
-        deleteFileIfExists(req.params.id);
-        const uniqueName = req.params.id + uuidv4() + path.extname(file.originalname);
-        cb(null, uniqueName);
-    },
-});
+const saveFile = (file, directory, userId, callback) => {
+    const uniqueName = uuidv4() + userId + path.extname(file.originalname);
+    const newFilePath = path.join("storage", directory, uniqueName);
+    fs.writeFile(newFilePath, file.buffer, (err) => {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, uniqueName);
+        }
+    });
+};
 
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 module.exports = {
-    upload,
     deleteFileIfExists,
+    saveFile,
+    upload,
 };

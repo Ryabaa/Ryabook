@@ -24,6 +24,8 @@ import {
     watchUpdateNotificationsData,
 } from "./notificationsSaga";
 
+import { watchGetPostList, watchLikePost, watchUploadPost } from "./postSaga";
+
 export default function* sagas() {
     yield takeEvery(reqestUrl.user, getUserSaga);
     yield takeEvery(reqestUrl.followers, getFollowersSaga);
@@ -41,5 +43,8 @@ export default function* sagas() {
         call(watchUpdateNotificationsData),
         call(watchUploadAvatar),
         call(watchRemoveAvatar),
+        call(watchGetPostList),
+        call(watchUploadPost),
+        call(watchLikePost),
     ]);
 }

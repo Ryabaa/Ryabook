@@ -93,17 +93,7 @@ export const NotificationContainer = styled.div<NotificationContainerProps>`
     ${(props) =>
         props.popUp &&
         css`
-            cursor: pointer;
-            width: 295px;
-            max-height: min-content;
-            position: absolute;
-            background-color: #1a1a1a;
-            border-radius: 50px;
-            bottom: 60px;
-            right: 50px;
-            opacity: 0;
-            box-shadow: 0 0 15px #ffffff6e;
-            animation: ${popUpAnimation} 5s cubic-bezier(0.4, 0, 1, 1);
+            fill: red;
         `};
 `;
 

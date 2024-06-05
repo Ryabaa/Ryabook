@@ -50,7 +50,7 @@ const NotificationsCounter = styled.div`
     border-radius: 50%;
     width: 20px;
     height: 20px;
-    background-color: rgb(255, 48, 64);
+    background-color: #ff3040;
     border: 1px solid #000;
     display: flex;
     justify-content: center;
@@ -61,4 +61,12 @@ const NotificationsCounter = styled.div`
     }
 `;
 
-export { LinkContainer, MenuButton, NotificationsCounter };
+const Avatar = styled.img`
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+`;
+
+const AddPost = styled.img``;
+
+export { LinkContainer, MenuButton, NotificationsCounter, Avatar, AddPost };

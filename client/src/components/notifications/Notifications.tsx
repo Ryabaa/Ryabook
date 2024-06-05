@@ -34,7 +34,7 @@ const Notifications: FC = () => {
                         <Container>
                             <h2>Notifications</h2>
                             <Content>
-                                {notifications.map((notification: any, index) => (
+                                {notifications.map((notification: any, index: number) => (
                                     <Notification notification={notification} key={index} />
                                 ))}
                             </Content>

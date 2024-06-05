@@ -1,11 +1,12 @@
 import { FC, useEffect } from "react";
 
-import StyledProfile, { Content, Head, PostsTitle, Posts, Info, Avatar } from "./profile-style";
+import StyledProfile, { Content, Head, PostsTitle, Info, Avatar } from "./profile-style";
 
 import { HiRectangleStack } from "react-icons/hi2";
 import { IoMdSettings } from "react-icons/io";
 
 import Nav from "../../components/nav/Nav";
+import PostsList from "../../components/posts/PostList";
 
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/reduxHooks";
 import { openAvatarModal } from "../../redux/reducers/avatarSlice";
@@ -14,6 +15,7 @@ const Profile: FC = () => {
     const dispatch = useAppDispatch();
     const user = useAppSelector((state) => state.user.currentUser);
     const { followers, following } = useAppSelector((state) => state.followers);
+    const postListLength = useAppSelector((state) => state.post.postList.length);
 
     const handleOpenAvatarModal = async () => {
         dispatch(openAvatarModal());
@@ -35,7 +37,7 @@ const Profile: FC = () => {
                             <h2>{user.username}</h2>
                         </div>
                         <div>
-                            <h3>4 posts</h3>
+                            <h3>{postListLength} posts</h3>
                             <h3>{followers.length} followers</h3>
                             <h3>{following.length} following</h3>
                         </div>
@@ -49,12 +51,7 @@ const Profile: FC = () => {
                         <h2>Posts</h2>
                     </div>
                 </PostsTitle>
-                <Posts>
-                    <p></p>
-                    <p></p>
-                    <p></p>
-                    <p></p>
-                </Posts>
+                <PostsList />
             </Content>
         </StyledProfile>
     );

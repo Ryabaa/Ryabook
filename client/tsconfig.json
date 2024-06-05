@@ -16,10 +16,5 @@
         "noEmit": true,
         "jsx": "react-jsx"
     },
-    "include": [
-        "src",
-        "./src/types/index.d.ts",
-        "../../temp/avatar-style.ts",
-        "../../ryabook-old/client/src/redux/index.ts"
-    ]
+    "include": ["src", "./src/types/index.d.ts"]
 }

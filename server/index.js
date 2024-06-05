@@ -3,9 +3,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const socketIo = require("socket.io");
+const path = require("path");
 
 const userRouter = require("./src/routers/userRouter");
+const postRouter = require("./src/routers/postRouter");
 const notificationRouter = require("./src/routers/notificationRouter");
+
 const { handleFollowUser } = require("./src/handlers/notrificationHandler");
 
 const app = express();
@@ -22,10 +25,12 @@ app.use((req, res, next) => {
 });
 app.use(cors());
 
-app.use("/user", userRouter);
-app.use("/notification", notificationRouter);
-
 app.use(express.static(__dirname));
+app.use("/storage", express.static(path.join(__dirname, "storage")));
+
+app.use("/user", userRouter);
+app.use("/post", postRouter);
+app.use("/notification", notificationRouter);
 
 const start = async () => {
     try {
