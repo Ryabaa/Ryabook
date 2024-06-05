@@ -101,7 +101,7 @@ class userController {
         try {
             const file = req.file;
             if (!file) {
-                return res.status(400).send("No file uploaded");
+                return res.status(400).json("No file uploaded");
             }
             const result = await service.uploadAvatar(req.params.id, file);
             res.status(201).json(result);
@@ -111,7 +111,6 @@ class userController {
     }
     async removeAvatar(req, res) {
         try {
-            console.log(req.params.id);
             const result = await service.removeAvatar(req.params.id);
             res.status(201).json(result);
         } catch (error) {

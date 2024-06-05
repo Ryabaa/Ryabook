@@ -15,6 +15,8 @@ import Notifications from "../components/notifications/Notifications";
 import PrivateRoute from "./PrivateRoute";
 import NotificationPopUp from "../components/notifications/NotificationPopUp";
 import Avatar from "../components/avatar/Avatar";
+import Post from "../components/posts/Post";
+import PostCreator from "../components/posts/PostCreator";
 
 const App: FC = () => {
     return (
@@ -22,6 +24,8 @@ const App: FC = () => {
             <GlobalStyles />
             <AppStyle>
                 <Avatar />
+                <Post />
+                <PostCreator />
                 <Followers />
                 <Notifications />
                 <NotificationPopUp />

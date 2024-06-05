@@ -6,24 +6,31 @@ import { getUnreadNotificationsCountData } from "../../redux/reducers/notificati
 import { openFollowersModal } from "../../redux/reducers/followersSlice";
 import { openNotificationsModal } from "../../redux/reducers/notificationsSlice";
 
-import StyledNav, { LinkContainer, MenuButton, NotificationsCounter } from "./nav-style";
+import StyledNav, { LinkContainer, MenuButton, NotificationsCounter, Avatar } from "./nav-style";
 
-import { CgProfile } from "react-icons/cg";
 import { AiFillHome } from "react-icons/ai";
+import { LiaPlusCircleSolid } from "react-icons/lia";
 import { TbMessageCircle2 } from "react-icons/tb";
 import { FaUserFriends } from "react-icons/fa";
 import { IoMenu, IoSearchOutline, IoNotifications } from "react-icons/io5";
+import { openPostCreatorModal } from "../../redux/reducers/postSlice";
 
 const Nav: FC = () => {
     const dispatch = useAppDispatch();
+    const user = useAppSelector((state) => state.user.currentUser);
     const { unreadNotificationsCount } = useAppSelector((state) => state.notifications);
 
     const handleOpenFollowersModal = async () => {
-            dispatch(openFollowersModal());
-        },
-        handleOpenNotificationsModal = async () => {
-            dispatch(openNotificationsModal());
-        };
+        dispatch(openFollowersModal());
+    };
+
+    const handleOpenNotificationsModal = async () => {
+        dispatch(openNotificationsModal());
+    };
+
+    const handleOpenPostCreatorModal = async () => {
+        dispatch(openPostCreatorModal());
+    };
 
     useEffect(() => {
         dispatch(getUnreadNotificationsCountData());
@@ -67,9 +74,15 @@ const Nav: FC = () => {
                     <p>Notifications</p>
                 </LinkContainer>
             </button>
+            <button onClick={handleOpenPostCreatorModal}>
+                <LinkContainer>
+                    <LiaPlusCircleSolid size={"30px"} />
+                    <p>Create</p>
+                </LinkContainer>
+            </button>
             <Link to="/profile">
                 <LinkContainer>
-                    <CgProfile size={"27px"} />
+                    <Avatar src={user.avatar} alt="" />
                     <p>Profile</p>
                 </LinkContainer>
             </Link>

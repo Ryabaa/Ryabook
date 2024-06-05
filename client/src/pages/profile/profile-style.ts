@@ -82,17 +82,4 @@ const PostsTitle = styled.div`
     }
 `;
 
-const Posts = styled.div`
-    width: 100%;
-    display: grid;
-    flex-wrap: wrap;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
-    & p {
-        background-color: #545455;
-        width: 310px;
-        height: 310px;
-    }
-`;
-
-export { Content, Head, Avatar, Info, PostsTitle, Posts };
+export { Content, Head, Avatar, Info, PostsTitle };
